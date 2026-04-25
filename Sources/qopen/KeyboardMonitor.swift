@@ -8,8 +8,11 @@ class KeyboardMonitor {
     private var runLoopSource: CFRunLoopSource?
     private let onTrigger: (Int) -> Void
 
-    // Track Right Command state via device-specific flag
-    private static var rightCmdDown = false
+    // Configurable trigger key
+    private static var triggerKeycode: Int64 = TriggerKeySettings.keycode
+    private static var triggerFlagMask: UInt64 = TriggerKeySettings.flagMask
+    private static var triggerParentFlag: UInt64 = TriggerKeySettings.parentFlag
+    private static var triggerDown = false
 
     init(onTrigger: @escaping (Int) -> Void) {
         self.onTrigger = onTrigger
@@ -51,15 +54,18 @@ class KeyboardMonitor {
 
         if type == .flagsChanged {
             let keycode = event.getIntegerValueField(.keyboardEventKeycode)
-            if keycode == 54 { // Right Command keycode
-                // NX_DEVICERCMDKEYMASK = 0x10 in the device-dependent flag bits
+            if keycode == triggerKeycode {
                 let flags = event.flags
-                rightCmdDown = flags.contains(.maskCommand) && (flags.rawValue & 0x10) != 0
+                if triggerFlagMask != 0 {
+                    triggerDown = (flags.rawValue & triggerParentFlag) != 0 && (flags.rawValue & triggerFlagMask) != 0
+                } else {
+                    triggerDown = (flags.rawValue & triggerParentFlag) != 0
+                }
             }
             return Unmanaged.passUnretained(event)
         }
 
-        if type == .keyDown && rightCmdDown {
+        if type == .keyDown && triggerDown {
             // Ignore auto-repeat (key held down)
             if event.getIntegerValueField(.keyboardEventAutorepeat) != 0 {
                 return nil // consume repeated events silently
@@ -102,5 +108,13 @@ class KeyboardMonitor {
         }
         eventTap = nil
         runLoopSource = nil
+    }
+
+    /// Reload trigger key settings (called when user changes preferences).
+    func reloadTriggerKey() {
+        KeyboardMonitor.triggerKeycode = TriggerKeySettings.keycode
+        KeyboardMonitor.triggerFlagMask = TriggerKeySettings.flagMask
+        KeyboardMonitor.triggerParentFlag = TriggerKeySettings.parentFlag
+        KeyboardMonitor.triggerDown = false
     }
 }

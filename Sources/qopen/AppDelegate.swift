@@ -4,6 +4,7 @@ import ApplicationServices
 class AppDelegate: NSObject, NSApplicationDelegate {
     private var statusItem: NSStatusItem!
     private var keyboardMonitor: KeyboardMonitor?
+    private var preferencesWindowController: PreferencesWindowController?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         setupStatusItem()
@@ -21,6 +22,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         let menu = NSMenu()
         menu.addItem(NSMenuItem(title: "Check Permissions…", action: #selector(requestPermission), keyEquivalent: ""))
+        menu.addItem(NSMenuItem(title: "Preferences…", action: #selector(openPreferences), keyEquivalent: ","))
         menu.addItem(.separator())
         menu.addItem(NSMenuItem(title: "Quit", action: #selector(terminate), keyEquivalent: "q"))
         statusItem.menu = menu
@@ -71,6 +73,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if AXIsProcessTrustedWithOptions(options), keyboardMonitor == nil {
             startMonitoring()
         }
+    }
+
+    @objc private func openPreferences() {
+        if preferencesWindowController == nil {
+            preferencesWindowController = PreferencesWindowController()
+        }
+        preferencesWindowController?.showWindow(nil)
     }
 
     @objc private func terminate() {

@@ -19,24 +19,24 @@ jobs:
 
       - name: Package app bundle
         run: |
-          APP="QOpen.app"
+          APP="QuickOpen.app"
           mkdir -p "$APP/Contents/MacOS"
-          cp "$(swift build -c release --show-bin-path)/qopen" "$APP/Contents/MacOS/QOpen"
+          cp "$(swift build -c release --show-bin-path)/quickopen" "$APP/Contents/MacOS/QuickOpen"
           cat > "$APP/Contents/Info.plist" << 'PLIST'
           <?xml version="1.0" encoding="UTF-8"?>
           <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
           <plist version="1.0">
           <dict>
               <key>CFBundleName</key>
-              <string>QOpen</string>
+              <string>QuickOpen</string>
               <key>CFBundleIdentifier</key>
-              <string>com.qopen.app</string>
+              <string>com.quickopen.app</string>
               <key>CFBundleVersion</key>
               <string>${{ github.ref_name }}</string>
               <key>CFBundleShortVersionString</key>
               <string>${{ github.ref_name }}</string>
               <key>CFBundleExecutable</key>
-              <string>QOpen</string>
+              <string>QuickOpen</string>
               <key>CFBundlePackageType</key>
               <string>APPL</string>
               <key>LSUIElement</key>
@@ -44,16 +44,16 @@ jobs:
               <key>LSMinimumSystemVersion</key>
               <string>13.0</string>
               <key>NSAccessibilityUsageDescription</key>
-              <string>QOpen needs Accessibility access to monitor keyboard shortcuts and read the Dock layout.</string>
+              <string>QuickOpen needs Accessibility access to monitor keyboard shortcuts and read the Dock layout.</string>
           </dict>
           </plist>
           PLIST
 
       - name: Create zip archive
-        run: zip -r QOpen-${{ github.ref_name }}.zip QOpen.app
+        run: zip -r QuickOpen-${{ github.ref_name }}.zip QuickOpen.app
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          files: QOpen-${{ github.ref_name }}.zip
+          files: QuickOpen-${{ github.ref_name }}.zip
           generate_release_notes: true

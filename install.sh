@@ -1,8 +1,8 @@
 #!/bin/bash
 set -euo pipefail
 
-REPO="runzhen/qopen"
-APP_NAME="QOpen"
+REPO="runzhen/quickopen"
+APP_NAME="QuickOpen"
 INSTALL_DIR="/Applications"
 
 echo "Installing $APP_NAME..."

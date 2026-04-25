@@ -1,4 +1,4 @@
-# QOpen
+# QuickOpen
 
 Switch Dock apps instantly with **Right ⌘ + Number**.
 
@@ -7,10 +7,10 @@ Press Right Command and a number key (1–9) to activate the corresponding app i
 ## Install
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/runzhen/qopen/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/runzhen/quickopen/main/install.sh | bash
 ```
 
-This downloads the latest release, extracts `QOpen.app`, and moves it to `/Applications`.
+This downloads the latest release, extracts `QuickOpen.app`, and moves it to `/Applications`.
 
 ## Permissions
 
@@ -18,7 +18,7 @@ On first launch, macOS will prompt for **Accessibility** permission. Grant it in
 
 **System Settings → Privacy & Security → Accessibility**
 
-QOpen needs this to monitor keyboard shortcuts and read the Dock layout.
+QuickOpen needs this to monitor keyboard shortcuts and read the Dock layout.
 
 ## Usage
 
@@ -41,13 +41,13 @@ Requires macOS 13+ and Swift 5.9+.
 ```bash
 swift build -c release
 ./scripts/build-app.sh
-open build/QOpen.app
+open build/QuickOpen.app
 ```
 
 ## Uninstall
 
 ```bash
-rm -rf /Applications/QOpen.app
+rm -rf /Applications/QuickOpen.app
 ```
 
 ## License

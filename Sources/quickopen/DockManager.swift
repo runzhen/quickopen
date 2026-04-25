@@ -7,16 +7,16 @@ enum DockManager {
     static func activateDockApp(at index: Int) {
         let items = getDockAppItems()
         guard index >= 1, index <= items.count else {
-            NSLog("qopen: Index %d out of range (Dock has %d apps).", index, items.count)
+            NSLog("quickopen: Index %d out of range (Dock has %d apps).", index, items.count)
             return
         }
         let item = items[index - 1]
         let name = axTitle(of: item) ?? "?"
         let err = AXUIElementPerformAction(item, kAXPressAction as CFString)
         if err == .success {
-            NSLog("qopen: Activated #%d — %@", index, name)
+            NSLog("quickopen: Activated #%d — %@", index, name)
         } else {
-            NSLog("qopen: Failed to activate #%d (%@), AXError %d", index, name, err.rawValue)
+            NSLog("quickopen: Failed to activate #%d (%@), AXError %d", index, name, err.rawValue)
         }
     }
 
@@ -27,7 +27,7 @@ enum DockManager {
         guard let dockPID = NSWorkspace.shared.runningApplications
             .first(where: { $0.bundleIdentifier == "com.apple.dock" })?
             .processIdentifier else {
-            NSLog("qopen: Dock process not found.")
+            NSLog("quickopen: Dock process not found.")
             return []
         }
 

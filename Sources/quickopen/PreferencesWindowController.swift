@@ -16,7 +16,7 @@ class PreferencesWindowController: NSWindowController {
             backing: .buffered,
             defer: false
         )
-        window.title = "QOpen Preferences"
+        window.title = "QuickOpen Preferences"
         window.center()
         window.isReleasedWhenClosed = false
         self.init(window: window)
@@ -108,7 +108,7 @@ class PreferencesWindowController: NSWindowController {
 
         updateCurrentKeyLabel()
         KeyboardMonitor.shared?.reloadTriggerKey()
-        NSLog("qopen: Trigger key changed to %@ (keycode %d)", name, keycode)
+        NSLog("quickopen: Trigger key changed to %@ (keycode %d)", name, keycode)
     }
 
     /// Map known modifier keycodes to a human-readable name, device flag mask, and parent flag.
@@ -138,7 +138,7 @@ class PreferencesWindowController: NSWindowController {
         TriggerKeySettings.reset()
         updateCurrentKeyLabel()
         KeyboardMonitor.shared?.reloadTriggerKey()
-        NSLog("qopen: Trigger key reset to Right ⌘")
+        NSLog("quickopen: Trigger key reset to Right ⌘")
     }
 
     deinit {

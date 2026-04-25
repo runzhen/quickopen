@@ -17,7 +17,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
         if let button = statusItem.button {
             button.title = "⌘"
-            button.toolTip = "qopen — Right ⌘ + Number to switch Dock apps"
+            button.toolTip = "quickopen — Right ⌘ + Number to switch Dock apps"
         }
 
         let menu = NSMenu()
@@ -35,7 +35,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if AXIsProcessTrustedWithOptions(options) {
             startMonitoring()
         } else {
-            NSLog("qopen: Accessibility permission not granted. Waiting…")
+            NSLog("quickopen: Accessibility permission not granted. Waiting…")
             pollForPermission()
         }
     }
@@ -60,9 +60,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             DockManager.activateDockApp(at: index)
         }
         if keyboardMonitor!.start() {
-            NSLog("qopen: Monitoring started — Right ⌘ + number to switch Dock apps")
+            NSLog("quickopen: Monitoring started — Right ⌘ + number to switch Dock apps")
         } else {
-            NSLog("qopen: Failed to create event tap. Check Input Monitoring / Accessibility permissions.")
+            NSLog("quickopen: Failed to create event tap. Check Input Monitoring / Accessibility permissions.")
         }
     }
 

@@ -3,3 +3,6 @@
 /build
 /.swiftpm
 Package.resolved
+.vscode
+.idea
+*.xcodeproj
